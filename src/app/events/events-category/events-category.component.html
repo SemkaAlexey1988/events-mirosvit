@@ -1,0 +1,154 @@
+<div *ngIf="load">
+<h2>{{name}}</h2>
+
+<form>
+	<input [(ngModel)]="searchName" [ngModelOptions]="{standalone: true}" (click)="clearInput(searchInput)" #searchInput type="text" class="form-control search" placeholder="Search" >
+</form>
+
+<form class="sort-data" #sortData>
+  <select class="form-control" (change)="onSortSelected($event.target.value)">
+    <option value="asc" selected="selected">Sort by date ASC</option>
+    <option value="desc">Sort by date DESC</option>
+    <option value="az">Sort from A to Z</option>
+    <option value="za">Sort from Z to A</option>
+  </select> 
+	</form>
+
+
+
+<div *ngFor="let events of listEvents | filter: searchName">
+  <div class="{{events.date_finish | dateconvert}} {{events.time_finish | timeconvert}}">
+  <div #elementEl id="{{events.id}}" [ngClass]="events.status == 1 ? 'completed' : 'active'" >
+<p>{{events.name}}</p>
+<p>{{events.date_start}}{{events.time_start | hyphen:'start':'0'}}</p>
+<p>{{events.date_finish}}{{events.time_finish | hyphen:'start':'0'}}</p>
+<p class="events__text" [innerHTML]="events.description"></p>
+<span (click)="onEdit(elementEl)" class="category__edit"><i class="far fa-edit"></i></span>
+<span (click)="onDelete(elementEl)" class="category__delete" ><i class="fa fa-trash" aria-hidden="true"></i></span> 
+</div>
+</div>
+</div>
+
+<a class="category__show-edit" (click)="showModal()">Add event</a>
+
+<p class="category__text" [innerHTML]="listCategories.description"></p>
+
+
+
+</div>
+
+
+<div class="dm-overlay" [ngClass]="statusModal ? 'activeited' : 'disabled'" (click)="closeModalBlock($event)">
+    <div class="dm-table">
+    <div class="dm-cell">
+    <div class="dm-modal" id="modal-block-second">
+    <div class="closes" (click)="closeModal()"><i class="fa fa-window-close" aria-hidden="true"></i></div>
+  
+  <h3>{{titleForm}}</h3>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <p class="success" *ngIf="messageSuccess">Event successfully added!</p>
+    <p class="success" *ngIf="messageSuccessEdit">Event successfully changed!</p>
+    <div class="form-group">
+    <input  type="hidden" [value]="id_value"   [formControlName]="'idUser'" [(ngModel)]="this.id_value">
+    </div>
+           
+    <div class="form-group">
+    <label>Name</label>
+    <input type="text" class="form-control" placeholder="name" [value]="nameValue" [formControlName]="'name'" 
+    [ngClass]="{'input-error': form.get('name').invalid && form.get('name').touched}" [(ngModel)]="this.nameValue" onfocus="this.placeholder = ''">	
+    <p class="error" *ngIf="form.get('name').invalid && form.get('name').touched">The name field must not be empty</p>
+    </div>
+    <div class="form-group">
+
+        
+
+    <label>Description</label>
+    <ckeditor data="{{descriptionValue}}" [formControl]="form.controls['description']"   [(ngModel)]="this.descriptionValue"
+    class="form-control" placeholder="Category description" 
+    [ngClass]="{'input-error': form.get('description').invalid && form.get('description').touched}" 
+    onfocus="this.placeholder = ''"
+    ></ckeditor>
+
+<!--
+    <textarea [ngClass]="{'input-error': form.get('description').invalid && form.get('description').touched}" 
+    class="form-control" placeholder="Category description" 
+    [value]="descriptionValue"  
+    [(ngModel)]="this.descriptionValue"
+    onfocus="this.placeholder = ''">
+  </textarea>	
+-->
+
+      <p class="error" *ngIf="form.get('description').invalid && form.get('description').touched">
+      <span *ngIf="form.get('description').errors['required']">The description field must not be empty.</span>
+    </p>	
+    </div>		
+    <div class="form-group">
+        <label>Event start</label>
+        <input type="hidden" [ngClass]="{'input-error': form.get('eventstart').invalid && form.get('eventstart').touched}" 
+        class="form-control" placeholder="Event start" [value]="eventstartValue" [formControlName]="'eventstart'" [(ngModel)]="this.eventstartValue"
+         onfocus="this.placeholder = ''">	
+         <div class="hide-input">
+         <input  [matDatepicker]="picker" [min]="minDate" [formControlName]="'eventstartpicker'" ng-model-options="{timezone: 'utc'}" >
+        </div>
+         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+
+    
+    <input [ngxTimepicker]="pickertime" [formControlName]="'eventstarttime'" class="form-control hide-input" placeholder="Event start time"
+    [value]="eventstartTimeValue" [(ngModel)]="this.eventstartTimeValue">
+        <ngx-material-timepicker #pickertime></ngx-material-timepicker>
+
+          <p class="error" *ngIf="form.get('eventstart').invalid && form.get('eventstart').touched">
+          <span *ngIf="form.get('eventstart').errors['required']">The event start field must not be empty.</span>
+        </p>
+
+        </div>
+
+
+
+
+      
+
+
+        <div class="form-group">
+            <label>Event finish</label>
+            <input type="hidden" [ngClass]="{'input-error': form.get('eventfinish').invalid && form.get('eventfinish').touched}" 
+            class="form-control" placeholder="Event finish" [value]="eventfinishValue" [formControlName]="'eventfinish'" [(ngModel)]="this.eventfinishValue"
+            onfocus="this.placeholder = ''">
+<div class="hide-input">
+            <input  [matDatepicker]="picker2" [min]="minDate" [formControlName]="'eventfinishpicker'" ng-model-options="{timezone: 'utc'}" >
+        </div>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      
+            <mat-datepicker #picker2></mat-datepicker>	
+
+            <input [ngxTimepicker]="pickertimefinish" [formControlName]="'eventfinishtime'" class="form-control hide-input" placeholder="Event finish time"
+            [value]="eventfinishTimeValue" [(ngModel)]="this.eventfinishTimeValue">
+                <ngx-material-timepicker #pickertimefinish></ngx-material-timepicker>
+
+
+              <p class="error" *ngIf="form.get('eventfinish').invalid && form.get('eventfinish').touched">
+              <span *ngIf="form.get('eventfinish').errors['required']">The event finish field must not be empty.</span>
+            </p>	
+            </div>  
+            
+            <label>Event status</label>
+         
+            <div class="radio">
+                <input type="checkbox" [value]="this.eventStatus ? 1 : 0" 
+                [checked]="this.eventStatus"
+                (click)="onClickChecbox(checked)" #checked
+                [(ngModel)]="this.eventStatus" [ngModelOptions]="{standalone: true}" >
+             </div>         
+          
+    <button class="btn btn-success submit" type="submit" [disabled]="form.invalid">{{buttonForm}}</button>
+             
+     </form>
+  
+     </div>
+    </div>
+  </div>
+  </div>
+  
+  
+

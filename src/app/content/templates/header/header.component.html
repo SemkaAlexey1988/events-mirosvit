@@ -1,0 +1,27 @@
+<header class="site-header">
+    <div class="container">
+            <div class="col-md-6">
+<ul>
+    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Main</a></li>
+    <li><a routerLink="/events" routerLinkActive="active">Events</a></li>
+    <li><a routerLink="/contacts" routerLinkActive="active">Contacts</a></li>
+</ul>
+                </div>
+<div class="col-md-6">
+
+    <ul *ngIf="showAuthorizationInfo">
+        <li><a routerLink="/signin">Sign in</a></li>
+        <li><a routerLink="/registration">Registration</a></li>
+        </ul>
+        
+        <div *ngIf="showUserInfo" class="curent-user" (clickOutside)="onClickedOutside($event)">
+        <p class="logout" (click)="toggleMenu(curentUserMenu)">{{userName}} {{userSurname}}</p>
+        <ul class="curent-user__menu" [ngClass]="status ? 'activeited' : 'disabled'" #curentUserMenu>
+            <li><a class="logout" (click)="logOut()">Log out</a></li>
+            </ul>
+        </div>
+
+    </div>
+        
+    </div>
+  </header>

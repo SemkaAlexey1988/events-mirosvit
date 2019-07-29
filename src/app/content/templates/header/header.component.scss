@@ -1,0 +1,22 @@
+.logout {
+    cursor: pointer;
+}
+
+.curent-user__menu.activeited{
+	display: block;
+}
+
+.curent-user__menu.disabled{
+	display: none;
+}
+
+.curent-user {
+    border: 1px solid #333;
+    width: 100px;
+    position: absolute;
+    z-index: 999;
+}
+
+.active {
+color: red;
+}

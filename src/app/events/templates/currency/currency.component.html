@@ -1,0 +1,15 @@
+
+<div *ngIf="loadCurrency; else loader">
+
+
+
+<p>{{currentCurrency.base}}</p>
+<p>{{currentCurrency.date}}</p>
+<p><strong>USD:</strong> {{currentCurrency.rates.USD}}</p>
+<p><strong>GBP:</strong> {{currentCurrency.rates.GBP}}</p>
+<p><strong>JPY:</strong> {{currentCurrency.rates.JPY}}</p>
+</div>
+
+<ng-template #loader>
+  <div class="loader">Load...</div>
+</ng-template>	

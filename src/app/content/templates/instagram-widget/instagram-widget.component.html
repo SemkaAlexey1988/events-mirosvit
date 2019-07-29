@@ -1,0 +1,10 @@
+
+<div *ngIf="loadWidget; else loader">
+
+  <div *ngFor="let photo of curentPhoto"><img src="{{photo.images.standard_resolution.url}}"> </div>
+  
+  </div>
+  
+  <ng-template #loader>
+    <div class="loader">Load...</div>
+  </ng-template>

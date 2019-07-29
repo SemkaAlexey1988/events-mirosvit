@@ -1,0 +1,52 @@
+<app-header></app-header>
+    <div class="site-inner">
+
+
+<div class="content-area__form">
+<div class="error">{{messageInfo}}</div>
+<p class="success" *ngIf="messageSuccess">You are successfully logged in!</p>
+<div class="form-wrapper" *ngIf="formStatus">
+    <h3>{{titleForm}}</h3> 
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>E-mail</label>
+            <input type="text" class="form-control" placeholder="Your e-mail" [value]="emailValue" [formControlName]="'email'" 
+            [ngClass]="{'input-error': form.get('email').invalid && form.get('email').touched}" onfocus="this.placeholder = ''">	
+            <p class="error" *ngIf="form.get('email').invalid && form.get('email').touched">
+            <span class="error" *ngIf="form.get('email')['errors']['required']">The e-mail field must not be empty.</span>
+            <span class="error" *ngIf="form.get('email')['errors']['email']"> Invalid e-mail format.</span>
+            </p>		
+            </div>
+            
+        
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" class="form-control" placeholder="Your password" [value]="passwordValue" [formControlName]="'password'" 
+              [ngClass]="{'input-error': form.get('password').invalid && form.get('password').touched}" onfocus="this.placeholder = ''">	
+              <p class="error" *ngIf="form.get('password').invalid && form.get('password').touched">
+              <span class="error" *ngIf="form.get('password')['errors']['required']">The password field must not be empty.</span>
+              <span class="error" *ngIf="form.get('password')['errors']['shortValueError']"> The password field must be at least 3 characters.</span>  
+            </p>		
+              </div>
+
+          <button class="btn btn-success" type="submit" [disabled]="form.invalid">{{buttonForm}}</button>
+    </form>
+    <p>Not yet registered? <a routerLink="/registration">Registration</a></p>
+  </div>
+  </div>
+
+
+</div>
+              
+
+
+
+
+
+
+
+
+
+  
+
+

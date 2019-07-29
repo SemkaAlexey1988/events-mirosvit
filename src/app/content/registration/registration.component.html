@@ -1,0 +1,119 @@
+<app-header></app-header>
+    <div class="site-inner">
+
+      <img src="../assets/images/spain.png" alt="img">
+
+<div class="content-area__form">
+
+  <h3>{{titleForm}}</h3>            
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+<p class="success" *ngIf="messageSuccess">You have successfully registered!</p>
+<div class="form-group">
+<input  type="hidden" [value]="id_value"   [formControlName]="'idUser'" >
+</div>
+
+<div class="form-group">
+<label>Name</label>
+<input type="text" class="form-control" placeholder="name" [value]="nameValue" [formControlName]="'name'" 
+[ngClass]="{'input-error': form.get('name').invalid && form.get('name').touched}" onfocus="this.placeholder = ''">	
+<p class="error" *ngIf="form.get('name').invalid && form.get('name').touched">
+  <span class="error" *ngIf="form.get('name')['errors']['required']">The name field must not be empty.</span>
+  <span class="error" *ngIf="form.get('name')['errors']['shortValueError']"> The name field must be at least 3 characters.</span>
+</p>
+</div>
+
+<div class="form-group">
+  <label>Surname</label>
+  <input type="text" class="form-control" placeholder="surname" [value]="surnameValue" [formControlName]="'surname'" 
+  [ngClass]="{'input-error': form.get('surname').invalid && form.get('surname').touched}" onfocus="this.placeholder = ''">	
+  <p class="error" *ngIf="form.get('surname').invalid && form.get('surname').touched">
+    <span class="error" *ngIf="form.get('surname')['errors']['required']">The surname field must not be empty.</span>
+    <span class="error" *ngIf="form.get('surname')['errors']['shortValueError']"> The surname field must be at least 3 characters.</span>
+  
+  </p>
+  </div>
+
+
+
+
+<div class="form-group">
+<label>E-mail</label>
+<input type="text" class="form-control" placeholder="Your e-mail" [value]="emailValue" [formControlName]="'email'" 
+[ngClass]="{'input-error': form.get('email').invalid && form.get('email').touched}" onfocus="this.placeholder = ''">	
+<p class="error" *ngIf="form.get('email').invalid && form.get('email').touched">
+<span class="error" *ngIf="form.get('email')['errors']['required']">The e-mail field must not be empty.</span>
+<span class="error" *ngIf="form.get('email')['errors']['email']"> Invalid e-mail format.</span>
+<span class="error" *ngIf="form.get('email')['errors']['ifExistEmail']"> Such email already exists.</span>
+</p>		
+</div>
+
+<div (click)="onClickShow()">x
+<ul>
+<li id="imulation"><img src="{{country_codeFlag}}" (click)="onClickShow()"> {{country_codeValue}}</li>
+</ul>
+</div>
+<ul class="phone-code">
+  <li *ngFor="let countries of listCountries; let i=index" id="p{{i}}" value="{{countries.country_code}}"  #selectedPhone (click)="onClickPhoneCode(selectedPhone)">
+    <img src="{{countries.country_flag}}" alt="{{countries.country}}"> {{countries.country_code}}</li>
+</ul>
+
+
+<div class="form-group">
+  <label>Phone</label>
+  <input type="text"  class="form-control" placeholder="098-1111111" [value]="phoneValue" [formControlName]="'phone'" 
+  [ngClass]="{'input-error': form.get('phone').invalid && form.get('phone').touched}" [textMask]="{mask: mask}"> 	
+  <p class="error" *ngIf="form.get('phone').invalid && form.get('phone').touched">
+  <span class="error" *ngIf="form.get('phone')['errors']['required']">The phone field must not be empty.</span>
+  <span class="error" *ngIf="form.get('phone')['errors']['shortValueErrorPhone']">  Invalid phone format.</span>  
+  </p>		
+  </div>
+
+
+
+
+
+<div class="form-group">
+  <label>Password</label>
+  <input type="password" class="form-control" placeholder="Your password" [value]="passwordValue" [formControlName]="'password'" 
+  [ngClass]="{'input-error': form.get('password').invalid && form.get('password').touched}" onfocus="this.placeholder = ''">	
+  <p class="error" *ngIf="form.get('password').invalid && form.get('password').touched">
+  <span class="error" *ngIf="form.get('password')['errors']['required']">The password field must not be empty.</span>
+  <span class="error" *ngIf="form.get('password')['errors']['shortValueError']"> The password field must be at least 3 characters.</span>  
+</p>		
+  </div>
+
+  <div class="form-group">
+  <label>Country</label>
+    <select class="form-control" (change)="onClickSelected($event.target.value)">
+<option *ngFor="let countries of listCountries; let i=index" id="c{{i}}" value="{{countries.country}}" #selected>{{countries.country}}</option>
+      </select>
+  </div>
+
+ 
+
+  <label>Your gender</label>
+  <div class="radio" *ngFor="let gender of listGender; let i=index">
+   <input type="radio" id="g{{i}}" [value]="gender.gender" name="gender.gender"  (click)="onClickChecbox(checked)" #checked > {{gender.gender}}
+    </div>
+
+	
+<button class="btn btn-success" type="submit" id="regButton" [disabled]="form.invalid">{{buttonForm}}</button>
+         
+</form>
+
+</div>
+
+
+</div>
+
+
+               
+
+
+
+
+
+
+
+

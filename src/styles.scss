@@ -1,0 +1,67 @@
+/* You can add global styles to this file, and also import other style files */
+
+$blackColor: #333;
+$orangeColor: #e24c11;
+$grayColor: #e8e3e3;
+$whiteColor: #FFF;
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+    min-height: 100%;
+}
+
+header, nav, section, main, article, aside, footer {
+    display: block;
+}
+
+body {
+        height: 100%;
+        width: 100%;
+        font-size: 16px;
+    color: #2e343a;
+    margin: 0;
+    padding: 0;
+}
+h1{
+
+}
+h2{
+
+}
+br
+{
+
+}
+p
+{
+
+}
+img{
+max-width:100%;
+height:auto;
+}
+
+
+
+
+.cke_wysiwyg_div ul {
+    padding: 30px !important;
+}
+.cke_wysiwyg_div ul li {
+    list-style-type: revert !important;
+}
+
+.mat-datepicker-content {
+    overflow: hidden !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    z-index: 999999 !important;
+}    

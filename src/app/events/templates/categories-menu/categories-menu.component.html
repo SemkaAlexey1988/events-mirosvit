@@ -1,0 +1,56 @@
+<ul>
+  <li *ngFor="let categories of listCategories">
+      <a [routerLink]="['/events', categories.id, categories.name | lowercase]" #elementEl id="{{categories.id}}">{{categories.name}}</a>
+      <span (click)="onEdit(elementEl)" class="category__edit"><i class="far fa-edit"></i></span>
+      <span (click)="onDelete(elementEl)" class="category__delete" ><i class="fa fa-trash" aria-hidden="true"></i></span> 
+  </li>
+</ul>
+
+
+<div class="dm-overlay" [ngClass]="statusModal ? 'activeited' : 'disabled'" (click)="closeModalBlock($event)">
+  <div class="dm-table">
+  <div class="dm-cell">
+  <div class="dm-modal" id="modal-block">
+  <div class="closes" (click)="closeModal()"><i class="fa fa-window-close" aria-hidden="true"></i></div>
+
+<h3>{{titleForm}}</h3>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <p class="success" *ngIf="messageSuccess">Category successfully added!</p>
+  <p class="success" *ngIf="messageSuccessEdit">Category successfully changed!</p>
+  <div class="form-group">
+  <input  type="hidden" [value]="id_value"   [formControlName]="'idUser'" [(ngModel)]="this.id_value">
+  </div>
+              
+  <div class="form-group">
+  <label>Name</label>
+  <input type="text" class="form-control" placeholder="name" [value]="nameValue" [formControlName]="'name'" 
+  [ngClass]="{'input-error': form.get('name').invalid && form.get('name').touched}" [(ngModel)]="this.nameValue" onfocus="this.placeholder = ''">	
+  <p class="error" *ngIf="form.get('name').invalid && form.get('name').touched">The name field must not be empty</p>
+  </div>
+  <div class="form-group">
+  <label>Description</label>
+ 
+
+  <ckeditor [ngClass]="{'input-error': form.get('description').invalid && form.get('description').touched}" 
+   data="{{descriptionValue}}" [formControl]="form.controls['description']"   [(ngModel)]="this.descriptionValue"
+  class="form-control description-block" placeholder="Category description" 
+  onfocus="this.placeholder = ''"
+  ></ckeditor>
+
+    <p class="error" *ngIf="form.get('description').invalid && form.get('description').touched">
+    <span *ngIf="form.get('description').errors['required']">The description field must not be empty.</span>
+    <span *ngIf="form.get('description').errors['lengthError']"> Description must be at least {{imputLength}} characters</span>
+  </p>	
+  </div>		
+  <button class="btn btn-success submit" type="submit" [disabled]="form.invalid">{{buttonForm}}</button>
+           
+   </form>
+
+   </div>
+  </div>
+</div>
+</div>
+
+<a class="category__show-edit" (click)="showModal()">Add category</a>
+
+

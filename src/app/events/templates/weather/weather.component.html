@@ -1,0 +1,16 @@
+<div *ngIf="loadWeather; else loader">
+
+  <div *ngFor="let descWeather of currentWeather; let i=index">
+ <!-- {{i + 1}} -->
+<p><strong>City:</strong> {{descWeather.name}}</p>
+<p><strong>Temperature:</strong> {{descWeather.main.temp}}</p>
+<p *ngFor="let weatherDescription of descWeather.weather" >
+  {{weatherDescription.main}}
+</p>
+</div> 
+
+</div>
+  
+  <ng-template #loader>
+    <div class="loader">Load...</div>
+  </ng-template>

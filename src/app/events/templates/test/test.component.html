@@ -1,0 +1,12 @@
+<ng-content></ng-content>
+<p>{{personSurname}}</p>
+
+<div [ngSwitch]="ages">
+    <ng-template ngSwitchCase="10">{{ages * 2}}</ng-template>
+    <ng-template ngSwitchCase="20">{{ages * 3}}</ng-template>
+    <ng-template ngSwitchDefault>{{ages}}</ng-template>
+  </div>
+
+<p>{{quantity}}</p>
+
+<input [ngModel]="personDescription" (ngModelChange)="onNameChange($event)" />

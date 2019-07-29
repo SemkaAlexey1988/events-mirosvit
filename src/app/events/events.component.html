@@ -1,0 +1,21 @@
+<app-header-events></app-header-events>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+        <app-categories-menu></app-categories-menu>
+        <app-currency></app-currency>
+        <app-weather></app-weather>
+        <app-test [personSurname]="surname" >Hello, {{name}}!</app-test>
+        <button (click)="plus()">+</button>
+        <button (click)="minus()">-</button>
+    </div>
+    <div class="col-md-9">
+        <div>
+           <h3 appColor selectedColor="black" [defaultColor]="'red'"> You are successfully logged in</h3>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+  </div>
+  
+</div>
+

@@ -1,0 +1,29 @@
+@mixin butt {
+    color: #FFFFFF;
+    margin-right: 5px;
+}
+
+.error {
+    color: red;	
+    }
+    .success {
+    color: green;		
+    }
+    
+    .input-error {
+        border: 1px solid red;
+    }
+
+    .user__delete {
+        @include butt;
+    }
+
+    .user__edit {
+        @include butt;
+    }
+
+
+
+@media screen and (min-width:300px) and (max-width:768px) {
+
+}  
