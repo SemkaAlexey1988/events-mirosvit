@@ -16,7 +16,7 @@ import {ApiService} from './api.service';
 export class AuthorizationService  {
 
   constructor(private http: Http, private ApiService: ApiService) {}
- // url:string = 'https://events-mirosvit.herokuapp.com';
+
   url:string;
   urlUsers:string = 'users';
   urlEmail:string = 'useremail';
